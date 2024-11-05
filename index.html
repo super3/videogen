@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Video Generator</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            max-width: 800px; 
+            margin: 0 auto; 
+            padding: 20px;
+        }
+        .form-group { margin-bottom: 15px; }
+        input[type="text"] { 
+            width: 100%; 
+            padding: 8px;
+            margin-top: 5px;
+        }
+        button { 
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        #result {
+            margin-top: 20px;
+        }
+        video {
+            max-width: 100%;
+            margin-top: 20px;
+        }
+        .video-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .video-item {
+            background: #f5f5f5;
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        .video-info {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Video Generator</h1>
+    <div class="form-group">
+        <label for="prompt">Enter your prompt:</label>
+        <input type="text" id="prompt" value="puppies in a cloud, 4k">
+    </div>
+    <button onclick="generateVideo()">Generate Video</button>
+    <div id="result"></div>
+    <div class="video-container">
+        <!-- Videos will be inserted here by the server -->
+    </div>
+
+    <script>
+        async function generateVideo() {
+            const resultDiv = document.getElementById('result');
+            const prompt = document.getElementById('prompt').value;
+            
+            resultDiv.textContent = 'Generating video... (this may take a while)';
+            
+            try {
+                const response = await fetch('/generate', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ prompt })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Video generation failed');
+                }
+
+                const data = await response.json();
+                resultDiv.textContent = 'Video generated successfully!';
+                
+                const newVideoHtml = `
+                    <div class="video-item">
+                        <video width="320" height="240" controls>
+                            <source src="/videos/${data.filename}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <div class="video-info">
+                            <p>Created: ${new Date().toLocaleDateString()}</p>
+                            <p>Filename: ${data.filename}</p>
+                            <p>Prompt: ${data.prompt}</p>
+                        </div>
+                    </div>
+                `;
+                
+                const videoContainer = document.querySelector('.video-container');
+                videoContainer.insertAdjacentHTML('afterbegin', newVideoHtml);
+            } catch (error) {
+                resultDiv.textContent = 'Error: ' + error.message;
+            }
+        }
+    </script>
+</body>
+</html> 

@@ -1,0 +1,18 @@
+# Dependencies
+node_modules/
+
+# Video files
+videos/
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Optional: OS specific files
+.DS_Store
+Thumbs.db 
+
+# Config file
+config.json

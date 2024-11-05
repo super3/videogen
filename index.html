@@ -7,6 +7,7 @@
         tailwind.config = {
             plugins: [
                 require('@tailwindcss/aspect-ratio'),
+                require('@tailwindcss/line-clamp'),
             ],
         }
     </script>
@@ -49,46 +50,79 @@
 </head>
 <body class="bg-gray-50 flex justify-center">
     <div class="max-w-6xl w-full px-4 sm:px-6 lg:px-8 py-8">
-        <h1 class="text-3xl font-bold mb-6">Mochi 1 Playground</h1>
-        <div class="flex gap-4 items-end">
-            <div class="flex-grow">
-                <label for="prompt" class="block text-sm font-medium text-gray-700 mb-1">Enter your prompt:</label>
-                <input type="text" id="prompt" 
-                       value="a cute corgi puppy playing in the snow, cinematic lighting" 
-                       class="w-full p-2 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+        <div class="mb-6">
+            <h1 class="text-3xl font-bold">Mochi 1 Playground</h1>
+            <p class="text-sm text-gray-500 mt-1">powered by <a href="https://prodia.com" target="_blank" class="text-blue-600 hover:text-blue-800 hover:underline">Prodia.</a></p>
+        </div>
+        <div class="flex flex-col gap-4">
+            <div class="flex gap-4">
+                <div class="flex-grow">
+                    <input type="text" id="prompt" 
+                           value="a cute corgi puppy playing in the snow, cinematic lighting" 
+                           class="w-full h-[46px] p-3 text-lg border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 border-gray-300">
+                </div>
+                <div class="flex gap-2">
+                    <button onclick="generateVideo()" 
+                            id="generateButton"
+                            class="px-6 h-[46px] bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 flex items-center gap-2 text-lg font-medium">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456ZM16.894 20.567 16.5 21.75l-.394-1.183a2.25 2.25 0 0 0-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 0 0 1.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 0 0 1.423 1.423l1.183.394-1.183.394a2.25 2.25 0 0 0-1.423 1.423Z" />
+                        </svg>
+                        <span>Generate Video</span>
+                    </button>
+                    <button onclick="toggleSettings()" 
+                            id="settingsButton"
+                            class="px-3 h-[46px] bg-gray-100 text-gray-600 rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 flex items-center transition-colors duration-200">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.431.992a6.759 6.759 0 010 .255c-.007.378.138.75.43.99l1.005.828c.424.35.534.954.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.57 6.57 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.28c-.09.543-.56.941-1.11.941h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.43-.992a6.932 6.932 0 010-.255c.007-.378-.138-.75-.43-.99l-1.004-.828a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.087.22-.128.332-.183.582-.495.644-.869l.214-1.281z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                    </button>
+                </div>
             </div>
-            <button onclick="generateVideo()" 
-                    id="generateButton"
-                    class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 flex items-center gap-2">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456ZM16.894 20.567 16.5 21.75l-.394-1.183a2.25 2.25 0 0 0-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 0 0 1.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 0 0 1.423 1.423l1.183.394-1.183.394a2.25 2.25 0 0 0-1.423 1.423Z" />
-                </svg>
-                <span>Generate Video</span>
-            </button>
-            <div class="w-24">
-                <label for="seed" class="block text-sm font-medium text-gray-700 mb-1">Seed:</label>
-                <input type="text" id="seed" placeholder="Optional" 
-                       class="w-full p-2 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+            
+            <!-- Improved settings panel -->
+            <div id="settingsPanel" class="hidden">
+                <div class="border border-gray-200 rounded-md bg-white shadow-sm">
+                    <div class="p-4">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-sm font-medium text-gray-900">Advanced Settings</h3>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="flex items-center gap-4">
+                                <label for="seed" class="block text-sm font-medium text-gray-700 w-20">Seed:</label>
+                                <input type="text" id="seed" placeholder="Optional" 
+                                       class="flex-grow p-2 text-sm border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 border-gray-300">
+                            </div>
+                            <!-- Add more settings here in the future -->
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <!-- Add this section for example prompts -->
-        <div class="mt-3 flex gap-3 items-center text-sm">
-            <span class="text-gray-500">Try:</span>
-            <button onclick="fillPrompt('a cute corgi puppy playing in the snow, cinematic lighting')" 
-                    class="text-blue-600 hover:text-blue-800 hover:underline">
-                corgi in snow
-            </button>
-            <span class="text-gray-300">&middot;</span>
-            <button onclick="fillPrompt('Close-up of a bowl of raspberries, beautiful light, bowl of raspberries rotates in front of the camera, a wedge for advertising raspberries')" 
-                    class="text-blue-600 hover:text-blue-800 hover:underline">
-                rotating raspberries
-            </button>
-            <span class="text-gray-300">&middot;</span>
-            <button onclick="fillPrompt('Imagine a vast, empty space filled with floating orbs in various sizes, suspended in mid-air. Each orb has a glossy, glass-like surface and reflects colors from a limited palette of deep blues, emerald greens, and hints of gold. Soft, ambient light illuminates the scene, casting subtle shadows and reflections on the orbs, which seem to drift slowly, almost like bubbles. The background is a smooth gradient that fades from a dark shade at the top to a lighter hue near the bottom, creating a sense of depth and tranquility. The entire scene has a calming, minimalist feel, with the floating orbs inviting quiet contemplation in their peaceful, organized arrangement.')" 
-                    class="text-blue-600 hover:text-blue-800 hover:underline">
-                floating orbs
-            </button>
+        <!-- Example prompts and videos left counter -->
+        <div class="mt-3 flex justify-between items-center">
+            <div class="flex gap-3 items-center text-sm">
+                <span class="text-gray-500">Try:</span>
+                <button onclick="fillPrompt('a cute corgi puppy playing in the snow, cinematic lighting')" 
+                        class="text-blue-600 hover:text-blue-800 hover:underline">
+                    corgi in snow
+                </button>
+                <span class="text-gray-300">&middot;</span>
+                <button onclick="fillPrompt('Close-up of a bowl of raspberries, beautiful light, bowl of raspberries rotates in front of the camera, a wedge for advertising raspberries')" 
+                        class="text-blue-600 hover:text-blue-800 hover:underline">
+                    rotating raspberries
+                </button>
+                <span class="text-gray-300">&middot;</span>
+                <button onclick="fillPrompt('Imagine a vast, empty space filled with floating orbs in various sizes, suspended in mid-air. Each orb has a glossy, glass-like surface and reflects colors from a limited palette of deep blues, emerald greens, and hints of gold. Soft, ambient light illuminates the scene, casting subtle shadows and reflections on the orbs, which seem to drift slowly, almost like bubbles. The background is a smooth gradient that fades from a dark shade at the top to a lighter hue near the bottom, creating a sense of depth and tranquility. The entire scene has a calming, minimalist feel, with the floating orbs inviting quiet contemplation in their peaceful, organized arrangement.')" 
+                        class="text-blue-600 hover:text-blue-800 hover:underline">
+                    floating orbs
+                </button>
+            </div>
+            <div class="text-sm text-gray-500">
+               2 videos left. <span class="text-blue-600 hover:text-blue-800 hover:underline cursor-pointer">Upgrade for more (It's free!)</span>
+            </div>
         </div>
 
         <div id="result" class="mt-4 text-gray-700"></div>
@@ -103,7 +137,7 @@
             const button = document.getElementById('generateButton');
             const originalContent = button.innerHTML;
             
-            // Update button to loading state with minimal spacing
+            // Update button to loading state
             button.innerHTML = `
                 <svg class="animate-spin -ml-1 mr-1 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                     <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
@@ -114,7 +148,6 @@
             button.disabled = true;
             button.classList.add('opacity-75', 'cursor-not-allowed');
             
-            const resultDiv = document.getElementById('result');
             const prompt = document.getElementById('prompt').value;
             const seed = document.getElementById('seed').value;
             
@@ -122,9 +155,9 @@
                 const response = await fetch('/generate', {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ prompt, seed })
+                    body: JSON.stringify({ prompt, seed }),
                 });
 
                 if (!response.ok) {
@@ -132,7 +165,7 @@
                 }
 
                 const data = await response.json();
-                resultDiv.textContent = 'Video generated successfully!';
+                console.log('Video generated successfully!');
                 
                 const newVideoHtml = `
                     <li class="relative">
@@ -152,8 +185,7 @@
                             </p>
                         </div>
                         <p class="block text-sm font-medium text-gray-500">
-                            Created: ${new Date().toLocaleDateString()}
-                            ${data.seed ? `| Seed: ${data.seed}` : ''}
+                            ${data.seed ? `Seed: ${data.seed}` : ''}
                         </p>
                     </li>
                 `;
@@ -161,9 +193,9 @@
                 const videoList = document.querySelector('ul[role="list"]');
                 videoList.insertAdjacentHTML('afterbegin', newVideoHtml);
             } catch (error) {
-                resultDiv.textContent = 'Error: ' + error.message;
+                console.error('Error:', error.message);
             } finally {
-                // Reset button to original state
+                // Restore button to original state
                 button.innerHTML = originalContent;
                 button.disabled = false;
                 button.classList.remove('opacity-75', 'cursor-not-allowed');
@@ -172,6 +204,14 @@
 
         function fillPrompt(text) {
             document.getElementById('prompt').value = text;
+        }
+
+        function toggleSettings() {
+            const panel = document.getElementById('settingsPanel');
+            const button = document.getElementById('settingsButton');
+            panel.classList.toggle('hidden');
+            button.classList.toggle('bg-gray-100');
+            button.classList.toggle('bg-gray-200');
         }
     </script>
 </body>

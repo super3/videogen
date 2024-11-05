@@ -40,8 +40,7 @@ app.get('/', async (req, res) => {
                 </p>
             </div>
             <p class="block text-sm font-medium text-gray-500">
-                Created: ${video.created.toLocaleDateString()}
-                ${video.seed ? `| Seed: ${video.seed}` : ''}
+                ${video.seed ? `Seed: ${video.seed}` : ''}
             </p>
         </li>
     `).join('');

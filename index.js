@@ -48,8 +48,8 @@ app.get('/', async (req, res) => {
     
     // Replace the ul content
     html = html.replace(
-        '<ul role="list" class="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">',
-        `<ul role="list" class="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">${videosList}`
+        '<ul role="list" class="grid grid-cols-1 gap-x-4 gap-y-4 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">',
+        `<ul role="list" class="grid grid-cols-1 gap-x-4 gap-y-4 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">${videosList}`
     );
     
     res.send(html);

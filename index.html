@@ -53,15 +53,17 @@
         <div class="flex gap-4 items-end">
             <div class="flex-grow">
                 <label for="prompt" class="block text-sm font-medium text-gray-700 mb-1">Enter your prompt:</label>
-                <input type="text" id="prompt" value="puppies in a cloud, 4k" 
+                <input type="text" id="prompt" 
+                       value="a cute corgi puppy playing in the snow, cinematic lighting" 
                        class="w-full p-2 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
             </div>
             <button onclick="generateVideo()" 
+                    id="generateButton"
                     class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 flex items-center gap-2">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456ZM16.894 20.567 16.5 21.75l-.394-1.183a2.25 2.25 0 0 0-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 0 0 1.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 0 0 1.423 1.423l1.183.394-1.183.394a2.25 2.25 0 0 0-1.423 1.423Z" />
                 </svg>
-                Generate Video
+                <span>Generate Video</span>
             </button>
             <div class="w-24">
                 <label for="seed" class="block text-sm font-medium text-gray-700 mb-1">Seed:</label>
@@ -77,32 +79,44 @@
                     class="text-blue-600 hover:text-blue-800 hover:underline">
                 corgi in snow
             </button>
-            <span class="text-gray-300">•</span>
-            <button onclick="fillPrompt('a majestic eagle soaring through a sunset sky, 4k ultra realistic')" 
+            <span class="text-gray-300">&middot;</span>
+            <button onclick="fillPrompt('Close-up of a bowl of raspberries, beautiful light, bowl of raspberries rotates in front of the camera, a wedge for advertising raspberries')" 
                     class="text-blue-600 hover:text-blue-800 hover:underline">
-                eagle at sunset
+                rotating raspberries
             </button>
-            <span class="text-gray-300">•</span>
-            <button onclick="fillPrompt('magical floating islands with waterfalls in a sci-fi setting, epic scale')" 
+            <span class="text-gray-300">&middot;</span>
+            <button onclick="fillPrompt('Imagine a vast, empty space filled with floating orbs in various sizes, suspended in mid-air. Each orb has a glossy, glass-like surface and reflects colors from a limited palette of deep blues, emerald greens, and hints of gold. Soft, ambient light illuminates the scene, casting subtle shadows and reflections on the orbs, which seem to drift slowly, almost like bubbles. The background is a smooth gradient that fades from a dark shade at the top to a lighter hue near the bottom, creating a sense of depth and tranquility. The entire scene has a calming, minimalist feel, with the floating orbs inviting quiet contemplation in their peaceful, organized arrangement.')" 
                     class="text-blue-600 hover:text-blue-800 hover:underline">
-                floating islands
+                floating orbs
             </button>
         </div>
 
         <div id="result" class="mt-4 text-gray-700"></div>
         <h2 class="text-2xl font-semibold text-gray-900 mt-8 mb-4">Your recent videos</h2>
-        <ul role="list" class="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
+        <ul role="list" class="grid grid-cols-1 gap-x-4 gap-y-4 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
             <!-- Videos will be inserted here by the server -->
         </ul>
     </div>
 
     <script>
         async function generateVideo() {
+            const button = document.getElementById('generateButton');
+            const originalContent = button.innerHTML;
+            
+            // Update button to loading state with minimal spacing
+            button.innerHTML = `
+                <svg class="animate-spin -ml-1 mr-1 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                <span>Generating...</span>
+            `;
+            button.disabled = true;
+            button.classList.add('opacity-75', 'cursor-not-allowed');
+            
             const resultDiv = document.getElementById('result');
             const prompt = document.getElementById('prompt').value;
             const seed = document.getElementById('seed').value;
-            
-            resultDiv.textContent = 'Generating video... (this may take a while)';
             
             try {
                 const response = await fetch('/generate', {
@@ -129,8 +143,8 @@
                             </video>
                         </div>
                         <div class="mt-2 flex items-center justify-between">
-                            <p class="text-sm font-medium text-gray-900 group">
-                                <span class="truncate">${data.prompt || 'No prompt provided'}</span>
+                            <p class="text-sm font-medium text-gray-900 group flex items-center">
+                                <span class="truncate max-w-[200px]">${data.prompt || 'No prompt provided'}</span>
                                 <button onclick="fillPrompt(\`${data.prompt.replace(/`/g, '\\`')}\`)" 
                                         class="ml-2 text-xs text-blue-600 hover:text-blue-800 opacity-0 group-hover:opacity-100 transition-opacity">
                                     Use Prompt
@@ -148,6 +162,11 @@
                 videoList.insertAdjacentHTML('afterbegin', newVideoHtml);
             } catch (error) {
                 resultDiv.textContent = 'Error: ' + error.message;
+            } finally {
+                // Reset button to original state
+                button.innerHTML = originalContent;
+                button.disabled = false;
+                button.classList.remove('opacity-75', 'cursor-not-allowed');
             }
         }
 

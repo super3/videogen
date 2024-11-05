@@ -51,8 +51,10 @@ app.post('/generate', async (req, res) => {
     const apiKey = config.apiKey;
     const timestamp = Date.now();
     const prompt = req.body.prompt;
+    const seed = req.body.seed;
     const metadata = {
         prompt: prompt,
+        seed: seed,
         timestamp: timestamp,
         created: new Date().toISOString()
     };
@@ -70,7 +72,8 @@ app.post('/generate', async (req, res) => {
             body: JSON.stringify({
                 type: 'inference.mochi1.txt2vid.v1',
                 config: {
-                    prompt: req.body.prompt
+                    prompt: req.body.prompt,
+                    seed: seed ? parseInt(seed) : Math.floor(Math.random() * 1000000)
                 }
             })
         });
@@ -98,7 +101,8 @@ app.post('/generate', async (req, res) => {
         res.json({ 
             success: true, 
             filename: videoFilename,
-            prompt: prompt 
+            prompt: prompt,
+            seed: seed 
         });
     } catch (error) {
         console.error('Error generating video:', error);

@@ -2,12 +2,14 @@
 node_modules/
 
 # Video files
-videos/
-videos2/
+videos/*
+videos2/*
 
-# Except these example videos
+# Then, explicitly allow these files
 !videos/example_1.mp4
 !videos/example_2.mp4
+!videos/example_1.json
+!videos/example_2.json
 
 # Optional npm cache directory
 .npm

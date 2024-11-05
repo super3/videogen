@@ -101,27 +101,33 @@
             </div>
         </div>
 
-        <!-- Example prompts and videos left counter -->
-        <div class="mt-3 flex justify-between items-center">
-            <div class="flex gap-3 items-center text-sm">
-                <span class="text-gray-500">Try:</span>
-                <button onclick="fillPrompt('a cute corgi puppy playing in the snow, cinematic lighting')" 
-                        class="text-blue-600 hover:text-blue-800 hover:underline">
-                    corgi in snow
-                </button>
-                <span class="text-gray-300">&middot;</span>
-                <button onclick="fillPrompt('Close-up of a bowl of raspberries, beautiful light, bowl of raspberries rotates in front of the camera, a wedge for advertising raspberries')" 
-                        class="text-blue-600 hover:text-blue-800 hover:underline">
-                    rotating raspberries
-                </button>
-                <span class="text-gray-300">&middot;</span>
-                <button onclick="fillPrompt('Imagine a vast, empty space filled with floating orbs in various sizes, suspended in mid-air. Each orb has a glossy, glass-like surface and reflects colors from a limited palette of deep blues, emerald greens, and hints of gold. Soft, ambient light illuminates the scene, casting subtle shadows and reflections on the orbs, which seem to drift slowly, almost like bubbles. The background is a smooth gradient that fades from a dark shade at the top to a lighter hue near the bottom, creating a sense of depth and tranquility. The entire scene has a calming, minimalist feel, with the floating orbs inviting quiet contemplation in their peaceful, organized arrangement.')" 
-                        class="text-blue-600 hover:text-blue-800 hover:underline">
-                    floating orbs
-                </button>
-            </div>
-            <div class="text-sm text-gray-500">
-                2 videos left. <span onclick="showEmailModal()" class="text-blue-600 hover:text-blue-800 hover:underline cursor-pointer">Join for more (It's free!)</span>
+        <!-- Example prompts with GitHub link -->
+        <div class="mt-3">
+            <div class="flex justify-between items-center">
+                <div class="flex gap-3 items-center text-sm">
+                    <span class="text-gray-500">Try:</span>
+                    <button onclick="fillPrompt('a cute corgi puppy playing in the snow, cinematic lighting')" 
+                            class="text-blue-600 hover:text-blue-800 hover:underline">
+                        corgi in snow
+                    </button>
+                    <span class="text-gray-300">&middot;</span>
+                    <button onclick="fillPrompt('Close-up of a bowl of raspberries, beautiful light, bowl of raspberries rotates in front of the camera, a wedge for advertising raspberries')" 
+                            class="text-blue-600 hover:text-blue-800 hover:underline">
+                        rotating raspberries
+                    </button>
+                    <span class="text-gray-300">&middot;</span>
+                    <button onclick="fillPrompt('Imagine a vast, empty space filled with floating orbs in various sizes, suspended in mid-air. Each orb has a glossy, glass-like surface and reflects colors from a limited palette of deep blues, emerald greens, and hints of gold. Soft, ambient light illuminates the scene, casting subtle shadows and reflections on the orbs, which seem to drift slowly, almost like bubbles. The background is a smooth gradient that fades from a dark shade at the top to a lighter hue near the bottom, creating a sense of depth and tranquility. The entire scene has a calming, minimalist feel, with the floating orbs inviting quiet contemplation in their peaceful, organized arrangement.')" 
+                            class="text-blue-600 hover:text-blue-800 hover:underline">
+                        floating orbs
+                    </button>
+                </div>
+                <a href="https://github.com/super3/videogen" target="_blank" 
+                   class="text-sm text-gray-500 hover:text-gray-700 flex items-center gap-1 ml-4 shrink-0">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd" />
+                    </svg>
+                    Fork on GitHub
+                </a>
             </div>
         </div>
 
@@ -130,55 +136,6 @@
         <ul role="list" class="grid grid-cols-1 gap-x-4 gap-y-4 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
             <!-- Videos will be inserted here by the server -->
         </ul>
-    </div>
-
-    <!-- Email Modal -->
-    <div id="emailModal" class="hidden fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center z-50">
-        <div class="bg-white rounded-lg px-4 pt-5 pb-4 sm:p-6 sm:pb-4 max-w-lg w-full mx-4">
-            <div class="sm:flex sm:items-start">
-                <div class="mt-3 text-center sm:mt-0 sm:text-left w-full">
-                    <div class="flex justify-between items-start">
-                        <h3 class="text-xl font-medium leading-6 text-gray-900">Join Mochi Playground Waitlist</h3>
-                        <button onclick="closeEmailModal()" class="text-gray-400 hover:text-gray-500">
-                            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                            </svg>
-                        </button>
-                    </div>
-                    <div class="mt-6">
-                        <p class="text-base text-gray-500">Want more video generations? We are at capacity but please leave your email and we'll let you know as soon as it's available.</p>
-                        <form id="emailForm" class="mt-6 space-y-6">
-                            <div>
-                                <label for="email" class="block text-base font-medium text-gray-700 mb-2">Email address</label>
-                                <input type="email" name="email" id="email" required
-                                       class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-lg py-3 px-4"
-                                       placeholder="you@example.com">
-                            </div>
-                            <div>
-                                <label for="plan" class="block text-base font-medium text-gray-700 mb-2">What's your interest level?</label>
-                                <select id="plan" name="plan" required
-                                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-lg py-3 px-4">
-                                    <option value="free">Free Plan</option>
-                                    <option value="paid">Paid Subscription ($20/month)</option>
-                                    <option value="dedicated">Dedicated ($500/month)</option>
-                                </select>
-                                <div class="mt-2 text-sm text-gray-500">
-                                    <span id="planDescription" class="italic">
-                                        Start with our free plan and upgrade anytime.
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="flex justify-center">
-                                <button type="submit"
-                                        class="w-full sm:w-2/3 rounded-md border border-transparent bg-blue-600 px-6 py-3 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors duration-200">
-                                    Join Waitlist
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 
     <script>
@@ -262,56 +219,6 @@
             button.classList.toggle('bg-gray-100');
             button.classList.toggle('bg-gray-200');
         }
-
-        function showEmailModal() {
-            document.getElementById('emailModal').classList.remove('hidden');
-            document.getElementById('email').focus();
-        }
-
-        function closeEmailModal() {
-            document.getElementById('emailModal').classList.add('hidden');
-        }
-
-        document.getElementById('emailForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const email = document.getElementById('email').value;
-            const plan = document.getElementById('plan').value;
-            
-            try {
-                const response = await fetch('/subscribe', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ email, plan })
-                });
-
-                if (response.ok) {
-                    alert('Thank you for subscribing!');
-                    closeEmailModal();
-                } else {
-                    throw new Error('Failed to subscribe');
-                }
-            } catch (error) {
-                alert('Sorry, there was an error. Please try again.');
-            }
-        });
-
-        document.getElementById('emailModal').addEventListener('click', (e) => {
-            if (e.target === e.currentTarget) {
-                closeEmailModal();
-            }
-        });
-
-        document.getElementById('plan').addEventListener('change', function() {
-            const descriptions = {
-                'free': 'Start with our free plan and upgrade anytime.',
-                'paid': 'Unlimited generations and priority support.',
-                'dedicated': 'Custom solutions and dedicated account manager.'
-            };
-            
-            document.getElementById('planDescription').textContent = descriptions[this.value];
-        });
     </script>
 </body>
 </html> 

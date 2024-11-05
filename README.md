@@ -6,7 +6,7 @@ A web application for generating and managing AI-generated videos.
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/videogen.git
+   git clone https://github.com/super3/videogen.git
    cd videogen
    ```
 

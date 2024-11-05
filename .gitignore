@@ -3,6 +3,11 @@ node_modules/
 
 # Video files
 videos/
+videos2/
+
+# Except these example videos
+!videos/example_1.mp4
+!videos/example_2.mp4
 
 # Optional npm cache directory
 .npm

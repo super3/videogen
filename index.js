@@ -23,24 +23,27 @@ app.get('/', async (req, res) => {
     
     // Create the videos list HTML with prompts
     const videosList = videos.map(video => `
-        <div class="video-item">
-            <video width="320" height="240" controls>
-                <source src="/videos/${video.filename}" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
-            <div class="video-info">
-                <p>Created: ${video.created.toLocaleDateString()}</p>
-                <p>Filename: ${video.filename}</p>
-                ${video.prompt ? `<p>Prompt: ${video.prompt}</p>` : ''}
+        <li class="relative">
+            <div class="group block w-full overflow-hidden rounded-lg bg-gray-100 focus-within:ring-2 focus-within:ring-blue-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100">
+                <video controls class="w-full h-auto object-cover">
+                    <source src="/videos/${video.filename}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
             </div>
-        </div>
+            <p class="mt-2 block truncate text-sm font-medium text-gray-900">
+                ${video.prompt || 'No prompt provided'}
+            </p>
+            <p class="block text-sm font-medium text-gray-500">
+                Created: ${video.created.toLocaleDateString()}
+                ${video.seed ? `| Seed: ${video.seed}` : ''}
+            </p>
+        </li>
     `).join('');
     
-    // Insert after the generate button and before the result div
+    // Update the replacement string to match
     html = html.replace(
-        '<div id="result"></div>',
-        `<div id="result"></div>
-        <div class="video-container">${videosList}</div>`
+        '<ul role="list" class="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">',
+        `<ul role="list" class="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">${videosList}`
     );
     
     res.send(html);

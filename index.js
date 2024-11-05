@@ -30,9 +30,15 @@ app.get('/', async (req, res) => {
                     Your browser does not support the video tag.
                 </video>
             </div>
-            <p class="mt-2 block truncate text-sm font-medium text-gray-900">
-                ${video.prompt || 'No prompt provided'}
-            </p>
+            <div class="mt-2 flex items-center justify-between">
+                <p class="text-sm font-medium text-gray-900 group flex items-center">
+                    <span class="truncate max-w-[200px]">${video.prompt || 'No prompt provided'}</span>
+                    <button onclick="fillPrompt(\`${video.prompt.replace(/`/g, '\\`')}\`)" 
+                            class="ml-2 text-xs text-blue-600 hover:text-blue-800 opacity-0 group-hover:opacity-100 transition-opacity">
+                        Use Prompt
+                    </button>
+                </p>
+            </div>
             <p class="block text-sm font-medium text-gray-500">
                 Created: ${video.created.toLocaleDateString()}
                 ${video.seed ? `| Seed: ${video.seed}` : ''}
@@ -40,7 +46,7 @@ app.get('/', async (req, res) => {
         </li>
     `).join('');
     
-    // Update the replacement string to match
+    // Replace the ul content
     html = html.replace(
         '<ul role="list" class="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">',
         `<ul role="list" class="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">${videosList}`

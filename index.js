@@ -5,6 +5,7 @@ const path = require('path');
 const getVideos = require('./utils/getVideos');
 const fs = require('fs');
 const config = require('./config.json');
+const { createProdia } = require('prodia/v2');
 
 // Middleware to parse JSON bodies
 app.use(express.json());
@@ -70,34 +71,32 @@ app.post('/generate', async (req, res) => {
     const videoFilename = `video_${timestamp}.mp4`;
 
     try {
-        const response = await fetch('https://inference.prodia.com/v2/job', {
-            method: 'POST',
-            headers: {
-                'accept': 'image/jpeg',
-                'content-type': 'application/json',
-                'authorization': `Bearer ${apiKey}`
-            },
-            body: JSON.stringify({
-                type: 'inference.mochi1.txt2vid.v1',
-                config: {
-                    prompt: req.body.prompt,
-                    seed: seed ? parseInt(seed) : Math.floor(Math.random() * 1000000)
-                }
-            })
+        // Initialize prodia client
+        const prodia = createProdia({
+            token: apiKey,
+            maxRetries: Infinity
         });
 
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
+        // Create the job
+        const job = await prodia.job({
+            type: 'inference.mochi1.txt2vid.v1',
+            config: {
+                prompt: prompt,
+                seed: seed ? parseInt(seed) : Math.floor(Math.random() * 1000000)
+            }
+        }, {
+            accept: "image/jpeg"
+        });
+
+        // Get the video buffer
+        const buffer = await job.arrayBuffer();
 
         // Ensure videos directory exists
-        const fs = require('fs');
         if (!fs.existsSync('videos')) {
             fs.mkdirSync('videos');
         }
 
-        // Save the response to a file
-        const buffer = await response.arrayBuffer();
+        // Save the video file
         fs.writeFileSync(`videos/${videoFilename}`, Buffer.from(buffer));
         
         // Save the metadata file
